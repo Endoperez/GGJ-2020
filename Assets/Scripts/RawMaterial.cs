@@ -58,6 +58,11 @@ public class RawMaterial : MonoBehaviour
             rb.isKinematic = false;
     }
 
+    public RawMaterialType GetRMType()
+    {
+        return type;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         string otherTag = collision.otherCollider.tag;
