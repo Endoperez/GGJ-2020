@@ -77,7 +77,7 @@ public class Drone : MonoBehaviour
     }
     #endregion
 
-    DroneAction droneAction = null; // DroneAction.None;
+    DroneAction droneAction = null;
 
     void OnVoiceCommand(string command)
     {
@@ -132,7 +132,12 @@ public class Drone : MonoBehaviour
             //rb.AddForce(0, force, 0, ForceMode.Acceleration);
             rb.velocity = new Vector3(0, movementSpeedForce, 0);
         }
-        rb.rotation = Quaternion.Euler(0, 0, 0);
+        if (rb.rotation.eulerAngles.z < 10.5 && rb.rotation.eulerAngles.z > 0.5)
+            rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z - 2f);
+        else if (rb.rotation.eulerAngles.z > 270 && rb.rotation.eulerAngles.z < 359.5)
+            rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z + 2f);
+        else
+            rb.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void moveDown()
@@ -141,12 +146,18 @@ public class Drone : MonoBehaviour
         //rb.AddForce(0, -1 * force, 0, ForceMode.Force);
         rb.velocity = new Vector3(0, -movementSpeedForce, 0);
         engineAudio.volume = carriedObjects.Count > 0 ? 0.6f : 0.4f;
-        rb.rotation = Quaternion.Euler(0, 0, 0);
+        //rb.rotation = Quaternion.Euler(0, 0, 0);
+        if (rb.rotation.eulerAngles.z < 10.5 && rb.rotation.eulerAngles.z > 0.5)
+            rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z - 2f);
+        else if (rb.rotation.eulerAngles.z > 270 && rb.rotation.eulerAngles.z < 359.5)
+            rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z + 2f);
+        else
+            rb.rotation = Quaternion.Euler(0, 0, 0);
     }
 
     public void moveLeft()
     {
-        if (transform.position.x > -8 && rb.velocity.x > -2)
+        if (transform.position.x > -8)// && rb.velocity.x > -2)
         {
             //forceVector.x -= thrust;
             //rb.AddForce(-1f, 2f, 0, ForceMode.Force);
@@ -159,14 +170,17 @@ public class Drone : MonoBehaviour
             //    rb.AddTorque(0, 0, 0.5f, ForceMode.Acceleration);
             //if (rb.transform.rotation.eulerAngles.z < 20f)
             //    rb.transform.Rotate(0, 0, 1f);
-            rb.rotation = Quaternion.Euler(0, 0, 10);
+            if (rb.rotation.eulerAngles.z < 9.5 || rb.rotation.eulerAngles.z > 270)
+                rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z + 2f);
+            else
+                rb.rotation = Quaternion.Euler(0, 0, 10);
         }
 
     }
 
     public void moveRight()
-    {
-        if (transform.position.x < 8 && rb.velocity.x < 2)
+    { 
+        if (transform.position.x < 8) // && rb.velocity.x < 2)
         {
             //forceVector.x += thrust;
             //rb.AddForce(1f, 2f, 0, ForceMode.Force);
@@ -175,7 +189,11 @@ public class Drone : MonoBehaviour
             //rb.AddForce(force, 0, 0, ForceMode.Acceleration);
             rb.velocity = new Vector3(movementSpeedForce, 0, 0);
 
-            rb.rotation = Quaternion.Euler(0, 0, -10);
+            //rb.rotation = Quaternion.Euler(0, 0, -10);
+            if (rb.rotation.eulerAngles.z < 90 || rb.rotation.eulerAngles.z > 350.5)
+                rb.rotation = Quaternion.Euler(0, 0, rb.rotation.eulerAngles.z - 2f);
+            else
+                rb.rotation = Quaternion.Euler(0, 0, 350);
         }
     }
 
