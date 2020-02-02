@@ -12,12 +12,16 @@ public enum ProductType {
 public class Factory : MonoBehaviour
 {
     [SerializeField]
-    GameObject FactoryInput;
+    GameObject[] productPrefabs;
     [SerializeField]
-    GameObject FactoryOutput;
+    GameObject factoryOutputPosition;
 
     [SerializeField]
-    GameObject[] productPrefabs;
+    GameObject factoryInput;
+    [SerializeField]
+    GameObject factoryOutput;
+
+
 
     [SerializeField]
     ProductType currentRepairTarget = ProductType.CarTire;
@@ -34,11 +38,15 @@ public class Factory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (FactoryInput != null)
+
+
+        if (factoryInput != null)
         {
+            Debug.Log("Factory input object found! Processing...");
             RawMaterial rawMaterial = GetComponent<RawMaterial>();
-                if (rawMaterial != null)
+            if (rawMaterial != null)
             {
+                Debug.Log("Checking raw material type...");
                 CheckRawMaterial(rawMaterial);
             }
         }
@@ -47,6 +55,7 @@ public class Factory : MonoBehaviour
     void CheckRawMaterial(RawMaterial incomingMaterial)
     {
         RawMaterialType[] recipe = CheckRecipe(currentRepairTarget);
+        Debug.Log("Checking recipes...");
         if (incomingMaterial.GetRMType() ==  recipe[acceptedMaterials] )
         {
             acceptedMaterials += 1;
@@ -58,14 +67,18 @@ public class Factory : MonoBehaviour
         }
         else
         {
-            Destroy(FactoryInput, 0.5f);
+            Destroy(factoryInput, 0.5f);
 
         }
     }
 
     void CreateProduct()
     {
-
+        Debug.Log("Creating new products...");
+        if ( productPrefabs[0] != null && factoryOutputPosition != null )
+        {
+            factoryOutput = Instantiate(productPrefabs[0], factoryOutput.transform.position, Quaternion.identity);
+        }
     }
 
     void SelectNextProductType()
@@ -94,5 +107,11 @@ public class Factory : MonoBehaviour
         }
 
        
+    }
+
+    public void SetFactoryInput(GameObject newInputObject)
+    {
+        factoryInput = newInputObject;
+
     }
 }

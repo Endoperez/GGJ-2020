@@ -16,12 +16,9 @@ public class RawMaterial : MonoBehaviour
     [SerializeField]
     RawMaterialType type = RawMaterialType.Metal;
     [SerializeField]
-    GameObject DroneGrabbingPoint;
+    GameObject destructionParticleObject;
 
-
-    bool dropped;
-    bool collected;
-    bool broken;
+    public bool broken;
 
 
 
@@ -33,43 +30,25 @@ public class RawMaterial : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (collected)
-        {
-            if(DroneGrabbingPoint != null)
-            {
-                transform.position = DroneGrabbingPoint.transform.position;
-            }
-        }
-        else if (dropped)
-        {
-
-        }
-    }
-
-    public void Drop()
-    {
-        dropped = true;
-
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
-            rb.isKinematic = false;
-    }
 
     public RawMaterialType GetRMType()
     {
         return type;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        string otherTag = collision.otherCollider.tag;
-        if ( otherTag == "Ground" || otherTag == "Factory")
+        string otherTag = collision.gameObject.tag;
+        if ( otherTag == "Ground")
         {
             broken = true;
-            Destroy(gameObject, 5f);
+
+            if (destructionParticleObject != null)
+            {
+                GameObject particleSystem = Instantiate(destructionParticleObject, transform.position, Quaternion.identity);
+                Destroy(particleSystem, 5f);
+            }
+            Destroy(gameObject, 0.05f);
         }
     }
 }
