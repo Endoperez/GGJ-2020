@@ -5,11 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - ResourcePile
-  - MovableObject
   - Factory
   - Ground
   - FactoryInput
   - Bounds
+  - CarriableObject
   layers:
   - Default
   - TransparentFX
