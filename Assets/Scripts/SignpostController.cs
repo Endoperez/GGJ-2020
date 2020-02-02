@@ -34,7 +34,7 @@ public class SignpostController : MonoBehaviour
     {
         ChangeMaterial(productionGoalSign, productionGoalMaterials[(int)currentProductionGoal]);
 
-        Debug.Log("Setting material type plastic, nr " + (int)RawMaterialType.Plastic + " to use material " + signMaterials[(int)RawMaterialType.Plastic].name);
+        //Debug.Log("Setting material type plastic, nr " + (int)RawMaterialType.Plastic + " to use material " + signMaterials[(int)RawMaterialType.Plastic].name);
 
         ChangeMaterial(sign1, signMaterials[(int)RawMaterialType.Plastic]);
         ChangeMaterial(sign2, signMaterials[(int)RawMaterialType.Plastic]);
