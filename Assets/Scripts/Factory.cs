@@ -10,7 +10,7 @@ public enum ProductType {
 
 
 
-    Count
+    _Count
 
 }
 
@@ -33,13 +33,6 @@ public class Factory : MonoBehaviour
     ProductType currentRepairTarget = ProductType.CarTire;
 
     int acceptedMaterials = 0;
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
