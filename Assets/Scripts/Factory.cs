@@ -98,7 +98,7 @@ public class Factory : MonoBehaviour
 
     void SelectNextProductType()
     {
-        currentRepairTarget = (ProductType)Random.Range(0, (int) ProductType.Count );
+        currentRepairTarget = (ProductType)Random.Range(0, (int) ProductType._Count );
 
 
         signpostController.SetNewRecipe(currentRepairTarget, CheckRecipe(currentRepairTarget));
