@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 
 public enum ProductType { 
     CarTire,
-    NeedleAndThread
+    NeedleAndThread,
+
+
+
+
+    Count
 
 }
 
@@ -17,8 +22,9 @@ public class Factory : MonoBehaviour
     GameObject factoryOutputPosition;
 
     [SerializeField]
+    SignpostController signpostController;
+
     GameObject factoryInput;
-    [SerializeField]
     GameObject factoryOutput;
 
 
@@ -42,11 +48,11 @@ public class Factory : MonoBehaviour
 
         if (factoryInput != null)
         {
-            Debug.Log("Factory input object found! Processing...");
+            //Debug.Log("Factory input object found! Processing...");
             RawMaterial incomingMaterial = factoryInput.GetComponent<RawMaterial>();
             if (incomingMaterial != null && !incomingMaterial.broken)
             {
-                Debug.Log("Checking raw material type...");
+                //Debug.Log("Checking raw material type...");
                 CheckRawMaterial(incomingMaterial);
             }
         }
@@ -55,24 +61,26 @@ public class Factory : MonoBehaviour
     void CheckRawMaterial(RawMaterial incomingMaterial)
     {
         RawMaterialType[] recipe = CheckRecipe(currentRepairTarget);
-        Debug.Log("Checking recipes...");
-        Debug.Log("Comparing input type " + incomingMaterial.GetRMType() + " against recipe type " + recipe[acceptedMaterials] + "...");
+        //Debug.Log("Checking recipes...");
+        //Debug.Log("Comparing input type " + incomingMaterial.GetRMType() + " against recipe type " + recipe[acceptedMaterials] + "...");
         if (incomingMaterial.GetRMType() ==  recipe[acceptedMaterials] )
         {
             
             acceptedMaterials += 1;
+
+            signpostController.SetSignCompleted(acceptedMaterials);
+
             incomingMaterial.broken = true;
             Destroy(factoryInput);
-            Debug.Log("Match! Accepted materials count is " + acceptedMaterials);
+            //Debug.Log("Match! Accepted materials count is " + acceptedMaterials);
             if (acceptedMaterials == recipe.Length) {
-                CreateProduct();
-                acceptedMaterials = 0;
-                SelectNextProductType();
+                Invoke("CreateProduct", 1f);
+
             }
         }
         else
         {
-            Debug.Log("Mismatch! Destroying...");
+            //Debug.Log("Mismatch! Destroying...");
             Destroy(factoryInput, 0.5f);
 
         }
@@ -80,20 +88,27 @@ public class Factory : MonoBehaviour
 
     void CreateProduct()
     {
-        Debug.Log("Creating new products...");
+        acceptedMaterials = 0;
+        SelectNextProductType();
+
+
+        //Debug.Log("Creating new products...");
         if ( productPrefabs[0] != null && factoryOutputPosition != null )
         {
             factoryOutput = Instantiate(productPrefabs[0], factoryOutputPosition.transform.position, Quaternion.identity);
         }
         else
         {
-            Debug.Log("Trying to create products, problem in productPrefabs or Output Position!");
+            //Debug.Log("Trying to create products, problem in productPrefabs or Output Position!");
         }
     }
 
     void SelectNextProductType()
     {
-        currentRepairTarget = ProductType.CarTire;
+        currentRepairTarget = (ProductType)Random.Range(0, (int) ProductType.Count );
+
+
+        signpostController.SetNewRecipe(currentRepairTarget, CheckRecipe(currentRepairTarget));
     }
 
     RawMaterialType[] CheckRecipe( ProductType targetProduct)
@@ -107,6 +122,12 @@ public class Factory : MonoBehaviour
                 recipe[1] = RawMaterialType.Plastic;
                 recipe[2] = RawMaterialType.Metal;
 
+                return recipe;
+
+            case ProductType.NeedleAndThread:
+                recipe = new RawMaterialType[2];
+                recipe[0] = RawMaterialType.Metal;
+                recipe[1] = RawMaterialType.Cotton;
                 return recipe;
 
             default:

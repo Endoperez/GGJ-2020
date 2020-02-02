@@ -18,14 +18,14 @@ public class FactoryInputTube : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Checking collisions...");
+        //Debug.Log("Checking what collided with factory input tube...");
         if(collision.transform.tag == "CarriableObject")
         {
             RawMaterial rawMaterialComponent = collision.gameObject.GetComponent<RawMaterial>();
             if (rawMaterialComponent == null)
                 return;
 
-            Debug.Log("Adding objects to Factory as Factory Input object...");
+            //Debug.Log("Adding objects to Factory as Factory Input object...");
             parentFactory.SetFactoryInput(collision.gameObject);
         }
     }
