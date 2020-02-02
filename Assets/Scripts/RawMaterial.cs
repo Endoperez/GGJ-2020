@@ -18,6 +18,7 @@ public class RawMaterial : MonoBehaviour
     [SerializeField]
     GameObject destructionParticleObject;
 
+    public bool isCarried = false;
     public bool broken;
 
 
@@ -38,6 +39,9 @@ public class RawMaterial : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (isCarried)
+            return;
+
         string otherTag = collision.gameObject.tag;
         if ( otherTag == "Ground")
         {

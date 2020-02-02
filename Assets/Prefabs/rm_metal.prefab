@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1305031522584502373}
   - component: {fileID: 1305031522584502366}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: rm_metal
   m_TagString: CarriableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5e22ff28f3ac8534e9437b0fc43dafdf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -126,3 +126,4 @@ MonoBehaviour:
   type: 0
   destructionParticleObject: {fileID: 7894516096043790973, guid: d6e9bb83ee6b1b6468c8b0d2a4838bf9,
     type: 3}
+  broken: 0

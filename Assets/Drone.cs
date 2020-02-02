@@ -15,7 +15,8 @@ public class Drone : MonoBehaviour
     private Rigidbody rb;
 
     bool isRunning = false;
-    bool isCarryingSomething = false;
+    public bool isCarryingSomething = false;
+
     private DateTime? lastDropTime = null;
     private List<GameObject> carriedObjects = new List<GameObject>();
     float maxY = 10f;
@@ -25,6 +26,22 @@ public class Drone : MonoBehaviour
 
     [SerializeField]
     GameObject hookPositionObject;
+
+    // getterit ja setterit 
+
+    public Vector3 GetHookPosition()
+    {
+        if (hookPositionObject != null)
+            return hookPositionObject.transform.position;
+        else
+            return transform.position;
+    }
+
+    public bool IsCarryingSomething()
+    {
+        return isCarryingSomething;
+    }
+
 
     // Start is called before the first frame upda
     void Start()
@@ -183,12 +200,23 @@ public class Drone : MonoBehaviour
     {
         foreach (var carriedObject in carriedObjects)
         {
+            if (carriedObject == null)
+                continue;
+
             carriedObject.transform.parent = transform.parent;
             //carriedObject.transform.position = new Vector3(carriedObject.transform.position.x, carriedObject.transform.position.y - 0.3f, carriedObject.transform.position.z);
             // Add ridig body and apply same velocity as the drone
             Rigidbody carriedObjectRigidbody = carriedObject.AddComponent<Rigidbody>();
             carriedObjectRigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionZ;
-            carriedObjectRigidbody.velocity = rb.velocity - Vector3.up;
+
+            // use drone's velocity to set the dropped object's initial velocity
+            //carriedObjectRigidbody.velocity = rb.velocity - Vector3.up;
+
+            // set the dropped object to fall straight down
+            carriedObjectRigidbody.velocity = - Vector3.up;
+
+            carriedObject.GetComponent<RawMaterial>().isCarried = false;
+
             lastDropTime = DateTime.Now;
         }
         //rb.AddForce(0, 1f, 0, ForceMode.Impulse);
@@ -283,6 +311,8 @@ public class Drone : MonoBehaviour
         // remove rigidbody component
         Rigidbody carriedObjectRigidbody = target.GetComponent<Rigidbody>();
         Destroy(carriedObjectRigidbody);
+
+        target.GetComponent<RawMaterial>().isCarried = true;
 
         // add carried object to list of carried objects, used to select which objects will be dropped
         this.carriedObjects.Add(target);

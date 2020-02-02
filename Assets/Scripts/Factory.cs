@@ -43,11 +43,11 @@ public class Factory : MonoBehaviour
         if (factoryInput != null)
         {
             Debug.Log("Factory input object found! Processing...");
-            RawMaterial rawMaterial = GetComponent<RawMaterial>();
-            if (rawMaterial != null)
+            RawMaterial incomingMaterial = factoryInput.GetComponent<RawMaterial>();
+            if (incomingMaterial != null && !incomingMaterial.broken)
             {
                 Debug.Log("Checking raw material type...");
-                CheckRawMaterial(rawMaterial);
+                CheckRawMaterial(incomingMaterial);
             }
         }
     }
@@ -56,9 +56,14 @@ public class Factory : MonoBehaviour
     {
         RawMaterialType[] recipe = CheckRecipe(currentRepairTarget);
         Debug.Log("Checking recipes...");
+        Debug.Log("Comparing input type " + incomingMaterial.GetRMType() + " against recipe type " + recipe[acceptedMaterials] + "...");
         if (incomingMaterial.GetRMType() ==  recipe[acceptedMaterials] )
         {
+            
             acceptedMaterials += 1;
+            incomingMaterial.broken = true;
+            Destroy(factoryInput);
+            Debug.Log("Match! Accepted materials count is " + acceptedMaterials);
             if (acceptedMaterials == recipe.Length) {
                 CreateProduct();
                 acceptedMaterials = 0;
@@ -67,6 +72,7 @@ public class Factory : MonoBehaviour
         }
         else
         {
+            Debug.Log("Mismatch! Destroying...");
             Destroy(factoryInput, 0.5f);
 
         }
@@ -77,7 +83,11 @@ public class Factory : MonoBehaviour
         Debug.Log("Creating new products...");
         if ( productPrefabs[0] != null && factoryOutputPosition != null )
         {
-            factoryOutput = Instantiate(productPrefabs[0], factoryOutput.transform.position, Quaternion.identity);
+            factoryOutput = Instantiate(productPrefabs[0], factoryOutputPosition.transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Debug.Log("Trying to create products, problem in productPrefabs or Output Position!");
         }
     }
 

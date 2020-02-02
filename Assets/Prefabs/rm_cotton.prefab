@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6175967004199974299
+--- !u!1 &1305031522584502372
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7733928111770361840}
-  - component: {fileID: 4772608798600093723}
-  - component: {fileID: 3755721163443067987}
-  - component: {fileID: 4712921427942993822}
-  - component: {fileID: 17086912038858560}
+  - component: {fileID: 1305031522584502369}
+  - component: {fileID: 1305031522584502368}
+  - component: {fileID: 1305031522584502371}
+  - component: {fileID: 1305031522584502370}
+  - component: {fileID: 1305031522584502373}
+  - component: {fileID: 1305031522584502366}
   m_Layer: 0
-  m_Name: Bubblegum
-  m_TagString: Untagged
+  m_Name: rm_cotton
+  m_TagString: CarriableObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7733928111770361840
+--- !u!4 &1305031522584502369
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175967004199974299}
+  m_GameObject: {fileID: 1305031522584502372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.50265735, y: 4.130795, z: -0.62890625}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -3.47, y: 1.6, z: -0.63}
+  m_LocalScale: {x: 1, y: 1, z: 0.42571}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4772608798600093723
+--- !u!33 &1305031522584502368
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175967004199974299}
+  m_GameObject: {fileID: 1305031522584502372}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &3755721163443067987
+--- !u!23 &1305031522584502371
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175967004199974299}
+  m_GameObject: {fileID: 1305031522584502372}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -60,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a2f9882e1d5c7134ab39ed3ebde89ece, type: 2}
+  - {fileID: 2100000, guid: 1985496aef8c4414bb3015584eab771c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -81,26 +82,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &4712921427942993822
+--- !u!135 &1305031522584502370
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175967004199974299}
+  m_GameObject: {fileID: 1305031522584502372}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &17086912038858560
+--- !u!54 &1305031522584502373
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175967004199974299}
+  m_GameObject: {fileID: 1305031522584502372}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -110,3 +111,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
+--- !u!114 &1305031522584502366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1305031522584502372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d17e66615d28e8b48ba7f7790545c590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  destructionParticleObject: {fileID: 7894516096043790973, guid: d6e9bb83ee6b1b6468c8b0d2a4838bf9,
+    type: 3}
+  broken: 0
